@@ -1,0 +1,218 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2 class="page-title">
+
+{#        {% if scenario_id == '1' %}#}
+{#            FEF-based Emulation for Rain Detection Scenario#}
+{#        {%  else %}#}
+{#            FEF-based Emulation for Drowsiness Detection Scenario#}
+{#        {% endif %}    #}
+    {{ page_title }}
+
+    </h2>
+
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'summary')">General Summary</button>
+      <button class="tablinks" onclick="openCity(event, 'tt_timeline')">Tasks Timeline</button>
+      <button class="tablinks" onclick="openCity(event, 'comp_tasks')">Performance Visualization</button>
+      <button class="tablinks" onclick="openCity(event, 'missed_tasks')">Overall Metrics Visualization</button>
+      <button class="tablinks" onclick="openCity(event, 'output')">CPU Timeline</button>
+    </div>
+
+    <div id="summary" class="tabcontent">
+      <h3>General Summary</h3>
+          <p>Total Tasks: {{ task_types|length }}</p>
+          <p>Total Execution Time: {{ total }}</p>
+          <p>Hyperperiod: {{ hyperperiod }}</p>
+          <p>Total Core Required: {{ core }}</p>
+          <p>CPU Utilization: {{ core }}</p>
+          <p>Process Utilization: {{ core }}</p>
+
+           <table class="table table-stripped">
+               <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Period</th>
+                    <th>Execution</th>
+                    <th>Release</th>
+                    <th>Type</th>
+                    <th>Urgency</th>
+               </tr>
+               {% for tp in task_types %}
+               <tr>
+                   <td>{{ tp.Tno }}</td>
+                   <td>{{ tp.name }}->{{ tp.vo }}</td>
+                   <td>{{ tp.period }}</td>
+                   <td>{{ tp.execution }}</td>
+                   <td>{{ tp.release }}</td>
+                   <td>{{ tp.type }}</td>
+                   <td>{{ tp.urgency }}</td>
+               </tr>
+               {% endfor %}
+
+           </table>
+    </div>
+
+    <div id="tt_timeline" class="tabcontent">
+      <h3>Tasks Timeline</h3>
+          <table class="table table-condensed table-striped table-bordered table-hover">
+         <tr>
+             <th style="width: 1%;">Tasks</th>
+             <th>Task Timeline</th>
+         </tr>
+              {% for tp in task_types %}
+                  <tr>
+                  <td>{{ tp.name }}</td>
+                      <td>
+                      {% for tl in task_timeline %}
+
+                        {% if tp.Tno|string == tl.task_instance.Tno|string %}
+                            <div class="tl-wrapper">
+                                <div class="cpu_timeline fill"></div>
+                                <div class="cpu_timeline">{{ tl.cpu_time }}</div>
+                            </div>
+
+                        {% else %}
+                            <div class="tl-wrapper">
+                                <div class="cpu_timeline empty"></div>
+                                <div class="cpu_timeline">{{ tl.cpu_time }}</div>
+                            </div>
+                        {% endif %}
+
+
+                {% endfor %}
+                  </td>
+                  </tr>
+          {% endfor %}
+        </table>
+    </div>
+
+    <div id="comp_tasks" class="tabcontent">
+      <h3>Performance Visualization</h3>
+        <p><canvas id="myRT" ></canvas></p>
+
+
+
+
+
+
+    </div>
+
+     <div id="missed_tasks" class="tabcontent">
+      <h3>Visualization</h3>
+      <p><canvas id="myChart" ></canvas></p>
+    </div>
+
+     <div id="output" class="tabcontent">
+      <h3>CPU Timeline</h3>
+      {{ html|safe }}
+    </div>
+
+
+
+<script src="{{ url_for('static',filename='js/Chart.min.js') }}"></script>
+<script>
+
+    function openCity(evt, cityName) {
+    // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the link that opened the tab
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    $(function () {
+
+    });
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Total Execution Time", "Hyperperiod", "Total Cores", "CPU Utilization", "Process Utilization", "Latency"],
+        datasets: [{
+            label: 'Overall Performance Metrics',
+            data: [{{ total }}, {{ hyperperiod }}, {{ core }}, {{ cpu_utilization }}, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+var ctx = document.getElementById("myRT").getContext('2d');
+var myRT = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ task_labels|safe }},
+        datasets: [{
+            label: 'Response Time',
+            data: {{ task_rt }},
+            {#backgroundColor: [#}
+            {#    'rgba(255, 99, 132, 0.2)',#}
+            {#    'rgba(54, 162, 235, 0.2)',#}
+            {#    'rgba(255, 206, 86, 0.2)',#}
+            {#    'rgba(75, 192, 192, 0.2)',#}
+            {#    'rgba(153, 102, 255, 0.2)',#}
+            {#    'rgba(255, 159, 64, 0.2)'#}
+            {#],#}
+            //backgroundColor:{{ bg_color|safe }},
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+{% endblock %}

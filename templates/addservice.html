@@ -1,0 +1,167 @@
+
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="row">
+        <div class="box box-info">
+            <div class="box-header">
+                <div class="page-title"><h3>Problem Analysis and Decomposition Plane</h3></div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-wrapper col-sm-10 col-lg-4">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="page-title">Add Problem Description</h3>
+                </div>
+                <div class="box-body with-border">
+                    {% from "includes/_formhelpers.html" import render_field %}
+                    <form class="form-horizontal" method="post" action="/addservice">
+                    {{ form.hidden_tag() }}
+
+                      <div class="form-group row">
+
+                          <div class="col-sm-10">
+                               {{ render_field(form.title, class="form-control") }}
+                          </div>
+
+                    </div>
+
+                    <div class="form-group row">
+        <div class="col-sm-10">
+                           {{ render_field(form.description, class="form-control") }}
+         </div>
+                  </div>
+
+                      <button type="submit" name="save_tasks" class="btn btn-primary">Add Task</button>
+
+                </form>
+                </div>
+            </div>
+
+
+
+        </div>
+{% if suggestion %}
+    <div class="col-lg-7">
+
+    <div class="box box-success">
+        <div class="box-header">
+            <h2 class="page-title" id="suggestion">Automated Generation based on Service Analysis</h2>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-header">
+            <h3>Micro-problems</h3>
+        </div>
+        <div class="box-body with-border">
+            <table class="table table-stripped">
+                       <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Parameters</th>
+                            <th>Action</th>
+                       </tr>
+                       {% for m in ms %}
+
+                           <tr>
+
+
+                           <td>{{ loop.index }}</td>
+                           <td>{{ m }}</td>
+                           <td>{{ m }}</td>
+                           <td>
+                               <a href="{{ url_for('addMicroService', mname=m) }}" class="ms_save" >Save to Repository</a> |
+                               <a href="{{ url_for('discardPost', ms=ms, tasks=ts,flag='t', index=loop.index) }}" class="ms_discard" data-toggle="modal" data-target="#msModal">Discard</a>
+                           </td>
+                       </tr>
+                       {% endfor %}
+
+          </table>
+        </div>
+    </div>
+
+
+
+
+        <div class="box box-success">
+            <div class="box-header">
+                <h3>Complex Tasks</h3>
+            </div>
+            <div class="box-body with-border">
+                <table class="table table-stripped">
+                       <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Parameters</th>
+                            <th>Action</th>
+                       </tr>
+                       {% for tp in tasks %}
+
+                           <tr>
+                           <td>{{ loop.index }}</td>
+                           <td>{{ tp }}</td>
+                           <td>{{ tp }}</td>
+                           <td><a href="{{ url_for('addTask', tname=tp,sid=service_id) }}" class="editThis" id="{{tp.Tno}}">Save to Repository</a> |
+                               <a href="{{ url_for('discardPost', ms=ms, tasks=ts,flag='t', index=loop.index) }}" data-toggle="modal" data-target="#taskModal">Discard</a> </td>
+                       </tr>
+                       {% endfor %}
+
+          </table>
+            </div>
+        </div>
+
+
+
+        </div>
+{% endif %}
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="msModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Discard Microservice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Would you like to go ahead and discard the Microservice. Note that this operation cannot be undone!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep</button>
+        <button type="button" class="btn btn-primary" id="discardMS">Discard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Discard Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Would you like to go ahead and discard the Task. Note that this operation cannot be undone!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep</button>
+        <button type="button" class="btn btn-primary" id="discardTask">Discard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

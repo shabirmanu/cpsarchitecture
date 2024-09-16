@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2>Virtual Objects</h2>
+
+    <table class="table table-stripped">
+        <tr>
+            <th>S. No.</th>
+            <th>VO Name</th>
+            <th>URL</th>
+            <th>Method</th>
+            <th>Data</th>
+            <th>Action</th>
+
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.url }} </td>
+                <td>{{ row.methods }} </td>
+                <td>{{ row.attributes }} </td>
+                <td><a href='{{ uri }}' class="btn btn-primary share" id="share-{{ row.id }}">Share on AppStore</a>
+                    <a href='{{ uri }}' class="btn btn-primary share" id="share-{{ row.id }}">Decompose</a><img src="{{url_for('static',filename='img/spinner.gif') }}" class="spinner" id="spinner-mapid-{{ row.id }}" width="30px" /> </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+{% endblock %}

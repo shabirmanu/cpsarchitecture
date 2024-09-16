@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2 class="page-title">Edit Tasks</h2>
+         <table class="table table-stripped">
+                       <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Period</th>
+                            <th>Execution</th>
+                            <th>Release</th>
+                            <th>Type</th>
+                            <th>Urgency</th>
+                            <th>Action</th>
+                       </tr>
+                       {% for tp in task_types %}
+                       <tr>
+                           <td>{{ tp.Tno }}</td>
+                           <td>{{ tp.name }}</td>
+                           <td>{{ tp.period }}</td>
+                           <td>{{ tp.execution }}</td>
+                           <td>{{ tp.release }}</td>
+                           <td>{{ tp.type }}</td>
+                           <td>{{ tp.urgency }}</td>
+                           <td><a href="edit/{{ tp.Tno }}" class="editThis" id="{{tp.Tno}}">Edit</a> | <a href="delete/"{{ tp.Tno }} id="{{tp.Tno}}">Delete</a> </td>
+                       </tr>
+                       {% endfor %}
+
+          </table>
+
+
+<!-- Modal -->
+  <div class="modal fade" id="editTask" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Task</h4>
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,106 @@
+<header class="main-header">
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>CPS</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>CPS</b> Platform</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-inverse">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+        <div class="projecttitle">
+           <ul>
+               <li>Renwable Energy Optimization with CPS Platform</li>
+           </ul>
+        </div>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+
+
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="col-lg-3">
+        <div class="navbar-header">
+          <a href="/" class="logo"><img src="{{ url_for('static',filename='img/logo.png') }}"></a>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+      <ul class="nav navbar-nav" id="mainMenu">
+          <li class="active"><a href="/">Home</a></li>
+
+          <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                          aria-haspopup="true" aria-expanded="false">
+              <span class="nav-label">Problem Analysis</span><span class="caret"></span></a>
+
+
+            <ul class="dropdown-menu">
+                <li><a href="/addservice">Describe Problem</a></li>
+                <li><a href="/addmicroservices">Discribe Microproblem</a></li>
+                <li><a href="/services">Problems</a></li>
+            </ul>
+          </li >
+
+
+          <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                          aria-haspopup="true" aria-expanded="false">
+              <span class="nav-label">Manage Tasks</span><span class="caret"></span></a>
+
+
+            <ul class="dropdown-menu">
+                <li><a href="/addtask">Add Single Task</a></li>
+                <li><a href="/gentasks">Generate Tasks</a></li>
+                <li><a href="/edittask">View Tasks</a></li>
+            </ul>
+          </li >
+
+
+          <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                          aria-haspopup="true" aria-expanded="false">
+              <span class="nav-label">Manage Virtual Objects</span><span class="caret"></span></a>
+
+
+            <ul class="dropdown-menu">
+                <li><a href="/addvirtualobj">Add Virtual Objectk</a></li>
+                <li><a href="/editvo">View Virtual Objects</a></li>
+            </ul>
+          </li >
+
+          <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                          aria-haspopup="true" aria-expanded="false">
+              <span class="nav-label">Solution Composition</span><span class="caret"></span></a>
+
+
+            <ul class="dropdown-menu">
+                <li><a href="/cps-design">Predictive Optimization</a></li>
+                <li><a href="/cps-design#tab_2-2">Task Mapping</a></li>
+                <li><a href="/cps-design#tab_3-2">Scheduling Mapping</a></li>
+                <li><a href="/cps-design#tab_4-2">Control Mapping</a></li>
+            </ul>
+         </li >
+
+
+      <li><a href="/cps-design#tab_2-2">Solution Deployment</a></li>
+      <li><a href="/schedule-tasks">Task Scheduling</a></li>
+      <li><a href="/deploy-tasks">Task Allocation</a></li>
+    </ul>
+    </div>
+
+  </div>
+</nav>
+

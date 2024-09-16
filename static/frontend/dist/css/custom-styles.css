@@ -1,0 +1,56 @@
+/*style the box*/
+ .gm-style .gm-style-iw {
+    background-color: #222d32 !important;
+
+     top: 0 !important;
+    left: 0 !important;
+    padding: 10px !important;
+    display: block !important;
+
+ }
+
+.gm-style .gm-style-iw .gm-style-iw-d {
+    overflow: hidden !important;
+}
+ /*!*style the p tag*!*/
+ .gm-style .gm-style-iw #google-popup p{
+    padding: 10px;
+ }
+
+
+/*!*style the arrow*!*/
+.gm-style div div div div div div div div {
+    background-color: #222d32 !important;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+/*style the link*/
+.gm-style div div div div div div div div a {
+    color: #222d32;
+    font-weight: bold;
+}
+
+.gm-style .gm-style-iw-t::after {
+    background-color:#222d32 !important;
+}
+
+#piChartWrapper .box {
+    width: auto;
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    border-top-color: rgb(210, 214, 222);
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+#platforms div.inner {
+    color: #FFF;}
+.disappeared {visibility: hidden;}
+.content-wrapper, .main-footer {margin-left: 0;}
+.main-footer {overflow: hidden;}

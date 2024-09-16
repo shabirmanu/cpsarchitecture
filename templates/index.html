@@ -1,0 +1,702 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Project Dashboard
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row" id="inform">
+            <!-- Info boxes -->
+
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Projects</span>
+              <span class="info-box-number">1</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Services</span>
+              <span class="info-box-number">5</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Devices</span>
+              <span class="info-box-number">7</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Tasks</span>
+              <span class="info-box-number">15</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Solvers</span>
+              <span class="info-box-number">2</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Algorithms</span>
+              <span class="info-box-number">2</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      </div>
+      <!-- /.row -->
+      <!-- Main row -->
+      <div class="row">
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-12 connectedSortable">
+
+          <!-- Map box -->
+          <div class="box box-solid bg-light-blue-gradient">
+            <div class="box-header">Device Position</div>
+            <div class="box-body">
+              <div id="mapid" style="height: 450px; width: 100%;"></div>
+            </div>
+          </div>
+          <!-- /.box -->
+
+
+
+
+
+        </section>
+
+          <div class="row listing">
+              <!-- TABLE: LATEST ORDERS -->
+              <div class="col-lg-7">
+                  <div class="box box-info">
+
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Device List</h3>
+
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="table-responsive">
+                              <table class="table no-margin">
+                                  <thead>
+                                  <tr>
+                                      <th>Device ID</th>
+                                      <th>Device Name</th>
+                                      <th>Location</th>
+                                      <th>Date</th>
+                                      <th>Status</th>
+                                      <th>Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody id="deviceList">
+                                  {% for device in devices %}
+                                      <tr>
+                                          <td>{{ device.id }}</td>
+                                          <td>{{ device.devicetitle }}</td>
+                                          <td>{{ device.latitude }},{{ device.longitude }}</td>
+                                          <td>{{ device.updated_at }}</td>
+                                          <td>{{ device.status }}</td>
+                                          <td>{{ device.id }}</td>
+                                      </tr>
+                                  {% endfor %}
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.table-responsive -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer clearfix">
+                          <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Add New Device</a>
+                          <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Devices</a>
+                      </div>
+                      <!-- /.box-footer -->
+                  </div>
+                  <div class="box box-info">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Task List</h3>
+
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="table-responsive">
+                              <table class="table no-margin">
+                                  <thead>
+                                  <tr>
+                                      <th>Task ID</th>
+                                      <th>Task title</th>
+                                      <th>Period</th>
+                                      <th>Execution</th>
+                                      <th>Problem ID</th>
+                                      <th>Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody id="deviceList">
+                                  {% for task in tasks %}
+                                      <tr>
+                                          <td>{{ task.id }}</td>
+                                          <td>{{ task.title }}</td>
+                                          <td>{{ task.period }}</td>
+                                          <td>{{ task.execution }}</td>
+                                          <td>{{ task.ms_id }}</td>
+                                          <td>{{ task.id }}</td>
+                                      </tr>
+                                  {% endfor %}
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.table-responsive -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer clearfix">
+                          <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Add New Task</a>
+                          <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Tasks</a>
+                      </div>
+                      <!-- /.box-footer -->
+                  </div>
+                  <div class="box box-info">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Virtual Object List</h3>
+
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="table-responsive">
+                              <table class="table no-margin">
+                                  <thead>
+                                  <tr>
+                                      <th>VO ID</th>
+                                      <th>VO Name</th>
+                                      <th>Task Tags</th>
+                                      <th>Device URL</th>
+                                      <th>Attributes</th>
+                                      <th>Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody id="deviceList">
+                                  {% for vo in vos %}
+                                      <tr>
+                                          <td>{{ vo.id }}</td>
+                                          <td>{{ vo.name }}</td>
+                                          <td>{{ vo.tasktags }}</td>
+                                          <td>{{ vo.url }}</td>
+                                          <td>{{ vo.attributes }}</td>
+                                          <td>{{ vo.id }}</td>
+                                      </tr>
+                                  {% endfor %}
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.table-responsive -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer clearfix">
+                          <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Add New Virtual Object</a>
+                          <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Virtual Objects</a>
+                      </div>
+                      <!-- /.box-footer -->
+                  </div>
+                  <div class="box box-info">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Solvers List</h3>
+
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="table-responsive">
+                              <table class="table no-margin">
+                                  <thead>
+                                  <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Hyper Parameters</th>
+                                    <th>Type</th>
+                                    <th>Action</th>
+
+                                 </tr>
+                                  </thead>
+                              <tbody>
+                    {% for o in slv_data %}
+
+                        <tr>
+
+
+                            <td>{{ loop.index }}</td>
+                            <td>{{ o.name }}</td>
+                            <td>
+                                {% for des in o.dp %}
+                                    {{ des.name }}={{ des.value }} <br />
+                                {% endfor %}
+
+                            </td>
+                            <td>$${{ o.type }}$$</td>
+
+                            <td>Edit Delete</td>
+
+
+                        </tr>
+                    {% endfor %}
+
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.table-responsive -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer clearfix">
+                          <a href="addsolver-type" class="btn btn-sm btn-info btn-flat pull-left">Add New Solver</a>
+                          <a href="addsolver-type" class="btn btn-sm btn-default btn-flat pull-right">View All Solvers</a>
+                      </div>
+                      <!-- /.box-footer -->
+                  </div>
+                  <div class="box box-info">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Objectives List</h3>
+
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                              </button>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="table-responsive">
+                              <table class="table no-margin">
+                                  <thead>
+                                  <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Cost</th>
+                                        <th>Goal</th>
+
+                                    </tr>
+                                  </thead>
+                                    <tbody>
+                                    {% for o in ofs %}
+
+                                        <tr>
+
+
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ o.name }}</td>
+
+                                            <td>$${{ o.cost }}$$</td>
+                                            <td>{{ o.goal }}</td>
+
+
+                                        </tr>
+                                    {% endfor %}
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.table-responsive -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer clearfix">
+                          <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Add New Objective</a>
+                          <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Objectives</a>
+                      </div>
+                      <!-- /.box-footer -->
+                  </div>
+              </div>
+              <div class="col-lg-5">
+                 <section class="content-header">
+                      <h1>
+                        CPS Problem Modeling
+                        <small>Flowchart</small>
+                      </h1>
+                 </section>
+                  <section class="content">
+                      <!-- row -->
+                      <div class="row">
+                        <div class="col-md-12">
+                            <!-- The time line -->
+                            <ul class="timeline">
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                  <span class="bg-red">
+                                    Problem Analysis
+                                  </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-cubes bg-blue"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Problem Analysis and Composition</a></h3>
+
+                                <div class="timeline-body">
+                                  The first step is the upload the description of problem to the system. The system analyzes
+                                    the problem and automatically generates some micro-problems and complex tasks
+                                </div>
+                                <div class="timeline-footer">
+                                  <a class="btn btn-primary btn-xs" href="addservice">Read more</a>
+                                </div>
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-plus-square bg-aqua"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header no-border"><a href="#">Complex Tasks</a> once generated based
+                                    on problem analysis, can be added to the tasks repository</h3>
+                                  <div class="timeline-footer">
+                                     <a class="btn btn-warning btn-flat btn-xs" href="deploy_tasks">View Complex Tasks</a>
+                                 </div>
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-clone bg-yellow"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Micro-problems</a> along with their goals and descriptions
+                                can be added to the micro-problem repository</h3>
+
+                                <div class="timeline-footer">
+                                  <a class="btn btn-warning btn-flat btn-xs" href="addmicroservice">View Microproblems</a>
+                                </div>
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                  <span class="bg-green">
+                                    Solution Composition
+                                  </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-camera bg-purple"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Solution</a> is composed using different solvers
+                                and the problem is mapped on different solvers based on drag-and-drop features</h3>
+
+                                 <div class="timeline-body">
+
+                                </div>
+                                <div class="timeline-footer">
+                                  <a class="btn btn-warning btn-flat btn-xs">View Design Plane</a>
+                                </div>
+
+
+                              </div>
+                            </li>
+
+                            <li>
+                              <i class="fa fa-camera bg-purple"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Prediction Mapping</a> Prediction Mapping is the mapping
+                                of micro-problem with a prediction algorithm</h3>
+
+                                <div class="timeline-footer">
+                                  <a class="btn btn-warning btn-flat btn-xs">View Prediction Plane</a>
+                                </div>
+
+
+                              </div>
+                            </li>
+                            <li>
+                          <i class="fa fa-camera bg-purple"></i>
+
+                          <div class="timeline-item">
+
+                            <h3 class="timeline-header"><a href="#">Optimization Mapping</a> is the mapping of problem to
+                            the objective functions and optimization solvers towards building a solution</h3>
+
+                            <div class="timeline-footer">
+                              <a class="btn btn-warning btn-flat btn-xs" href="cps-design">View Optimization Plane</a>
+                            </div>
+
+
+                          </div>
+                        </li>
+                            <li>
+                          <i class="fa fa-camera bg-purple"></i>
+
+                          <div class="timeline-item">
+
+                            <h3 class="timeline-header"><a href="#">Task Mapping</a> is the mapping of optimal tasks
+                            on virtual objects which will be eventually used on the deployment of solution on physical devices</h3>
+
+                            <div class="timeline-footer">
+                              <a class="btn btn-warning btn-flat btn-xs" href="cps-design#tab_2-2">View Task Mappign Plane</a>
+
+set NUTR := A B1 B2 C ;
+set FOOD := BEEF CHK FISH HAM MCH MTL SPG TUR ;
+
+param:   cost  f_min  f_max :=
+  BEEF   3.19    0     100
+  CHK    2.59    0     100
+  FISH   2.29    0     100
+  HAM    2.89    0     100
+  MCH    1.89    0     100
+  MTL    1.99    0     100
+  SPG    1.99    0     100
+  TUR    2.49    0     100 ;
+
+param:   n_min  n_max :=
+   A      700   10000
+   C      700   10000
+   B1     700   10000
+   B2     700   10000 ;
+
+param amt (tr):
+           A    C   B1   B2 :=
+   BEEF   60   20   10   15
+   CHK     8    0   20   20
+   FISH    8   10   15   10
+   HAM    40   40   35   10
+   MCH    15   35   15   15
+   MTL    70   30   15   15
+   SPG    25   50   25   15
+   TUR    60   20   15   10 ;
+                            </div>
+
+
+                          </div>
+                        </li>
+                            <li>
+                          <i class="fa fa-camera bg-purple"></i>
+
+                          <div class="timeline-item">
+
+                            <h3 class="timeline-header"><a href="#">Scheduling and Control Mapping</a> is the process of
+                            selecting the scheduling solvers and control solvers for the optimal tasks-virtual objects pairs</h3>
+
+                            <div class="timeline-footer">
+                              <a class="btn btn-warning btn-flat btn-xs" href="cps-design#tab_3-2">Scheduling and Control Plane</a>
+                            </div>
+
+
+                          </div>
+                        </li>
+                            <!-- END timeline item -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-asterisk bg-maroon"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Solution Persistance</a> is a process in which the solution
+                                is stored as a configurable object and later upon deployment, it will be send as a command to the solver</h3>
+
+                                <div class="timeline-footer">
+                                  <a href="deploy_solutions" class="btn btn-xs bg-maroon">View Solutions</a>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="time-label">
+                                  <span class="bg-aqua-gradient">
+                                    Solution Deployment
+                                  </span>
+                            </li>
+                            <li>
+                              <i class="fa fa-briefcase bg-aqua-gradient"></i>
+
+                              <div class="timeline-item">
+
+                                <h3 class="timeline-header"><a href="#">Solution Deployment</a> is a process of communicating
+                                the solution configuration object with the actual algorithms and results analysis</h3>
+
+                                <div class="timeline-footer">
+                                  <a href="deploy_solutions" class="btn btn-xs bg-maroon">See Solutions</a>
+                                </div>
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <li>
+                              <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                  </section>
+              </div>
+
+          </div>
+
+        <!-- right col -->
+      </div>
+      <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <script type="text/javascript">
+            var markersdata = [];
+
+    </script>
+
+    {% for d in devices %}
+        <script type="text/javascript">
+            var mark = {};
+            mark.type = "Waste";
+            mark.color_code= "dd4b39"
+            mark.id = {{ d.id }};
+            mark.title = "{{ d.devicetitle }}";
+            mark.status = "{{ d.statue }}";
+            mark.date = "{{ d.updated_at }}";
+            mark.type = "marker";
+            mark.coordinates = [];
+            mark.coordinates[0] = {{ d.latitude }};
+            mark.coordinates[1] = {{ d.longitude }};
+            markersdata.push(mark)
+
+        </script>
+    {% endfor %}
+
+<script type="text/javascript">
+var map;
+var marker;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('mapid'), {
+  center: new google.maps.LatLng(33.4559, 126.562),
+  zoom: 15
+  });
+
+  for(i=0; i< markersdata.length; i++) {
+      var current = markersdata[i];
+      marker = new google.maps.Marker({
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: {lat: current.coordinates[0], lng: current.coordinates[1]}
+      });
+  }
+
+  marker.addListener('click', toggleBounce);
+
+
+    {#var marker, i;
+
+    for(i=0; i< markersdata.length; i++) {
+        var current = markersdata[i];
+
+
+        var point = new google.maps.LatLng(
+            parseFloat(current.coordinates[0]),
+            parseFloat(current.coordinates[1]));
+
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(point[0], point[1]),
+            map: map
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infowindow.setContent("Hi");
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+
+    }#}
+
+}
+function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+
+</script>
+{#<script src="{{ url_for('static',filename='js/custom-map.js') }}"></script>#}
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3>Add Solver Type</h3>
+        </div>
+        <div class="box-body">
+            {% from "includes/_formhelpers.html" import render_field %}
+            <form class="form-horizontal" method="post" action="/addsolver-type">
+            {{ form.hidden_tag() }}
+
+
+                <div class="form-group row">
+
+                  <div class="col-sm-10">
+                       {{ render_field(form.algorithm, class="form-control") }}
+                  </div>
+
+               </div>
+
+                <div class="form-group row">
+
+                  <div class="col-sm-10">
+                       {{ render_field(form.name, class="form-control") }}
+                  </div>
+
+               </div>
+
+                <div class="form-group row">
+
+                  <div class="col-sm-10">
+                       {{ render_field(form.hyperparameters,  placeholder="ex: hyper parameter|default value", class="form-control") }}
+                  </div>
+
+               </div>
+
+
+              <button type="submit" name="save_tasks" class="btn btn-primary">Add Solver</button>
+
+        </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-8">
+
+        <div class="box box-success">
+            <div class="box-header">
+                <h3>Solvers</h3>
+            </div>
+            <div class="box-body with-border">
+                <table class="table table-stripped">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Hyper Parameters</th>
+                        <th>Type</th>
+                        <th>Action</th>
+
+                    </tr>
+                    {% for o in slv_data %}
+
+                        <tr>
+
+
+                            <td>{{ loop.index }}</td>
+                            <td>{{ o.name }}</td>
+                            <td>
+                                {% for des in o.dp %}
+                                    {{ des.name }}={{ des.value }} <br />
+                                {% endfor %}
+
+                            </td>
+                            <td>$${{ o.type }}$$</td>
+
+                            <td>Edit Delete</td>
+
+
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+
+<div class="row">
+
+    <div class="form-wrapper col-lg-4">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3>Add Objective Function</h3>
+            </div>
+            <div class="box-body">
+                {% from "includes/_formhelpers.html" import render_field %}
+                <form class="form-horizontal" method="post" action="/addof" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.name, class="form-control") }}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.des_param, placeholder="type|design variable|default value ex: param|T|0", class="form-control") }}
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.obf, class="form-control") }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.constraints, class="form-control") }}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.data_assign, placeholder="design variable|value ex: T|0", class="form-control") }}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.goal, class="form-control") }}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-10">
+                                {{ render_field(form.dataset, class="form-control") }}
+                        </div>
+
+                    </div>
+
+
+
+                    <button type="submit" name="save_tasks" class="btn btn-primary">Add Objective Function</button>
+
+                </form>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="col-lg-8">
+
+        <div class="box box-success">
+            <div class="box-header">
+                <h3>Objective Functions</h3>
+            </div>
+            <div class="box-body with-border">
+                <div class="table-responsive">
+                    <table class="table table-stripped">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Cost</th>
+                            <th>Goal</th>
+
+                        </tr>
+                        {% for o in ofs %}
+
+                            <tr>
+
+
+                                <td>{{ loop.index }}</td>
+                                <td>{{ o.name }}</td>
+
+                                <td>$${{ o.cost }}$$</td>
+                                <td>{{ o.goal }}</td>
+
+
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+{% endblock %}
+

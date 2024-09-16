@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2  class="page-title">Rate Monotonic Analysis</h2>
+    {% if(error) %}
+        <div class="alert alert-danger alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ error_msg }} {{ cpu_utilization }}
+          </div>
+
+    {% endif %}
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'summary')">General Summary</button>
+      <button class="tablinks" onclick="openCity(event, 'tt_timeline')">Tasks Timeline</button>
+      <button class="tablinks" onclick="openCity(event, 'comp_tasks')">Completed Tasks</button>
+      <button class="tablinks" onclick="openCity(event, 'missed_tasks')">Missed Tasks</button>
+      <button class="tablinks" onclick="openCity(event, 'output')">Output</button>
+    </div>
+
+    <div id="summary" class="tabcontent">
+      <h3>General Summary</h3>
+          <p>Total Tasks: {{ task_types|length }}</p>
+          <p>Total Execution Time: {{ total }}</p>
+          <p>Hyperperiod: {{ hyperperiod }}</p>
+          <p>Total Core Required: {{ core }}</p>
+          <p>CPU Utilization: {{ core }}</p>
+          <p>Process Utilization: {{ core }}</p>
+
+           <table class="table table-stripped">
+               <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Period</th>
+                    <th>Execution</th>
+                    <th>Release</th>
+                    <th>Type</th>
+                    <th>Urgency</th>
+               </tr>
+               {% for tp in task_types %}
+               <tr>
+                   <td>{{ tp.Tno }}</td>
+                   <td>{{ tp.name }}</td>
+                   <td>{{ tp.period }}</td>
+                   <td>{{ tp.execution }}</td>
+                   <td>{{ tp.release }}</td>
+                   <td>{{ tp.type }}</td>
+                   <td>{{ tp.urgency }}</td>
+               </tr>
+               {% endfor %}
+
+           </table>
+    </div>
+
+     <div id="tt_timeline" class="tabcontent">
+      <h3>Tasks Timeline</h3>
+          <table class="table table-condensed table-striped table-bordered table-hover">
+         <tr>
+             <th>Clock Cycle</th>
+             <th>Allocated Task</th>
+             <th>Remarks</th>
+         </tr>
+         {% for tl in task_timeline %}
+            <tr>
+                {% if tl.task_instance is none %}
+                    <td>{{ tl.cpu_time }} ~ {{ tl.cpu_time|int + 1 }} </td>
+                    <td>Empty</td>
+                    <td> Processor is free and not been utilized by any processor</td>
+                {% else %}
+                    <td>{{ tl.cpu_time }} ~ {{ tl.cpu_time|int + 1 }}</td>
+                    <td>{{ tl.task_instance.get_unique_name() }}</td>
+                    <td> Processor has been used {{ tl.task_instance.get_unique_name() }}</td>
+                {% endif %}
+            </tr>
+
+         {% endfor %}
+        </table>
+    </div>
+
+    <div id="comp_tasks" class="tabcontent">
+      <h3>Completed Tasks</h3>
+
+      <p>Task2 ran 419 times in hyperperiod.</p>
+      <p>Task1 ran 140 times in hyperperiod.</p>
+      <p>Task4 ran 419 times in hyperperiod.</p>
+
+         <div class="alert alert-success">Task1, Task2, Task3 are completed</div>
+    </div>
+
+     <div id="missed_tasks" class="tabcontent">
+            <h3>Missed Tasks</h3>
+            {% for p in tasks %}
+                <p>{{ p.get_unique_name()}} is dropped due to overload</p>
+            {% endfor %}
+
+    </div>
+
+     <div id="output" class="tabcontent">
+
+        <h3>CPU Timeline</h3>
+        {{ html|safe }}
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

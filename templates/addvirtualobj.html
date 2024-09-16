@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="form-wrapper">
+    <h3 class="page-title">Add Virtual Object</h3>
+    {% from "includes/_formhelpers.html" import render_field %}
+        <form class="form-horizontal" method="post" action="/addvirtualobj">
+            {{ form.hidden_tag() }}
+
+              <div class="form-group row">
+
+                  <div class="col-sm-10">
+                      <div class="col-sm-8">
+                       {{ render_field(form.name, class="form-control") }}
+                      </div>
+                  </div>
+
+            </div>
+             <div class="form-group row">
+
+                  <div class="col-sm-10">
+                      <div class="col-sm-8">
+                          {{ render_field(form.taskTags, class="form-control", data_role = "tagsinput") }}
+                      </div>
+                  </div>
+
+            </div>
+
+            <div class="form-group row">
+
+              <div class="col-sm-10">
+                  <div class="col-sm-8">
+                   {{ render_field(form.url, class="form-control") }}
+                  </div>
+              </div>
+
+          </div>
+          <div class="form-group row">
+               <div class="col-sm-10">
+                <div class="col-sm-8">
+                    {{ render_field(form.methods, class="form-control", data_role = "tagsinput") }}
+                </div>
+
+            </div>
+          </div>
+              <div class="form-group row">
+               <div class="col-sm-10">
+                 <div class="col-sm-8">
+                    {{ render_field(form.attributes, class="form-control", data_role = "tagsinput") }}
+                </div>
+
+
+            </div>
+          </div>
+
+              <button type="submit" name="save_vos" class="btn btn-primary">Add Virtual Objects</button>
+
+        </form>
+    </div>
+{% endblock %}

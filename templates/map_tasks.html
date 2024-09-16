@@ -1,0 +1,99 @@
+<script type="text/javascript">
+    var save_url_val = {{ url_for('_save_states') }}
+</script>
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2>Task Mapping</h2>
+    <p>One one side there are tasks while on the other side there are virtual objects listed. The tasks can be mapped by dragging an arrow from tasks and drop it on any virtual object.
+    </p>
+    <p>The following flowchart will help you get going with this toolbox.</p>
+    <div class="box box-info">
+
+        <div class="box-header with-border">
+            <h3>Mapping Plane</h3>
+        </div>
+        <div class="box-body">
+
+            <div class="left tasks">
+                <h3>Tasks</h3>
+
+                {% for tk in tasks %}
+                    <div class="item tasks task-item" id="task-{{ tk.id }}">{{ tk.title }}</div>
+
+                {% endfor %}
+            </div>
+            <div class="right vos">
+
+                <h3>Virtual Objects</h3>
+                {% for vo in vos %}
+                    <div class="item vo vo-item" id="vo-{{ vo.id }}">{{ vo.name }}</div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+        <div class="box-footer">
+            <a href="/deploy-tasks" class="btn btn-primary">Save Configuration</a>
+        </div>
+
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.5.8/js/jsplumb.min.js"></script>
+    <script type="text/javascript">
+    jsPlumb.ready(function() {
+
+    jsPlumb.setContainer($('.flowchart'))
+    var common = {
+        anchor:"Continuous",
+        endpoint:["Rectangle", { width:20, height:20 }],
+        paintStyle: {fill:"gray", stroke:"gray", strokeWidth:3}
+    };
+    var i = 0;
+    var source_ids = [];
+    var target_ids = [];
+
+    source = [];
+    target = [];
+
+    $('.task-item').each(function() {
+       source.push(this.id)
+    });
+
+    $('.vo-item').each(function() {
+       target.push(this.id)
+    });
+
+    console.log(source)
+
+
+     jsPlumb.makeSource(source, {
+        connector: 'StateMachine'
+    }, common);
+    jsPlumb.makeTarget(target, {
+        connector: 'StateMachine',
+        allowLoopback: true,
+        maxConnection:3,
+        isTarget:true,
+        overlays:[
+            ["Arrow" , { width:12, length:12, location:0.67 }]
+        ]
+
+
+    }, common);
+
+    jsPlumb.bind('connection', function(info) {
+    console.log("before posting");
+    $.get(save_url_val, { from: info.sourceId.split("-")[1], to: info.targetId.split("-")[1] });
+    }
+
+);
+
+});
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,4 @@
+Instance Id,Tasks No,Start,End,Priority,Task Name,Urgency,Priority Deadline,Priority Period,Priority Slack,Priority Execution,Sensing Output
+2852,1,1.0,2.0,6.0,getSolar,1,6.0,10,4.0,1,31
+7567,13,1.0,2.0,6.0,normalizeEnergy,0,6.0,10,4.0,1,71
+2383,10,2.0,3.0,5.0,solarToEnergy,1,5.0,10,2.0,1,22

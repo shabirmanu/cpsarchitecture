@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2>Deploy Tasks</h2>
+
+    <table class="table table-stripped">
+        <tr>
+            <th>S. No.</th>
+            <th>Mapped Task</th>
+            <th>Action</th>
+            <th>Deployement Status</th>
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row.name }} -> {{ row.title }}</td>
+                <td><a href='{{ row.url }}?task={{ row.title }}' class="btn btn-primary deploy" id="mapid-{{ row.id }}">Deploy</a> <img src="{{url_for('static',filename='img/spinner.gif') }}" class="spinner" id="spinner-mapid-{{ row.id }}" width="30px" /> </td>
+                <td>Not Deployed</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+{% endblock %}

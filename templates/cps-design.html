@@ -1,0 +1,470 @@
+<script type="text/javascript">
+    var save_url_val = '{{ url_for('_save_solution') }}'
+    var save_url_val1 = '{{ url_for('_save_sch_solution') }}'
+    var save_url_val2 = '{{ url_for('_save_states') }}'
+</script>
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <!-- Custom Tabs (Pulled to the right) -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#tab_1-1" data-toggle="tab">Solver Mapping</a></li>
+              <li><a href="#tab_2-2" data-toggle="tab">Task Mapping</a></li>
+              <li><a href="#tab_3-2" data-toggle="tab">Scheduling Mapping</a></li>
+              <li><a href="#tab_4-4" data-toggle="tab">Control Mapping</a></li>
+
+              <li class="pull-left header"><i class="fa fa-th"></i> Complex Problem Design Plane</li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1-1">
+
+
+                <div class="box box-info">
+
+                    <div class="box-header with-border">
+                        <h3>CPS Design Plane</h3>
+                    </div>
+                    <div class="box-body row" style="padding: 10px 35px;">
+
+                        <div class="tasks left">
+
+
+
+
+                                {% for prob in mp_data %}
+
+                                    <div class="box">
+                                      <div class="box-header with-border">
+                                        <h3 class="box-title">{{ prob.title }}</h3>
+                                      </div>
+
+                                    </div>
+
+
+                                    {% for mprob in prob.microproblems %}
+                                        <div class="item mprob mp-item" id="mp-{{ mprob.mpid }}">{{ mprob.mp_name }}</div>
+                                    {% endfor %}
+                                {% endfor %}
+
+                        </div>
+
+
+                        <div class="solvers-wrapper">
+
+                            <div class="prediction">
+                                <div class="box">
+                                  <div class="box-header with-border">
+                                    <h3 class="box-title">Prediction Mapping</h3>
+                                  </div>
+
+                                </div>
+                                <div class="tasks left" style="margin-left: 160px;">
+
+
+
+                                    <h3>Prediction Goal</h3>
+
+
+                                    {% for pred in preds %}
+                                        <div class="item obj obj-item" id="predg-{{ pred.id }}">{{ pred.name }}</div>
+                                    {% endfor %}
+
+
+                                </div>
+
+                                <div class="left vos" style="margin-left: 160px;">
+
+                                    <h3>Solvers</h3>
+                                    {% for slv in pred_solvers %}
+                                        <div class="item slv slv-item" id="pslv-{{ slv.id }}">{{ slv.name }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="optimization">
+                                <div class="box">
+                                  <div class="box-header">
+                                    <h3 class="box-title">Optimization Mapping</h3>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                  </div>
+
+                                </div>
+                                <!-- /.box -->
+                                <div class="tasks left" style="margin-left: 160px;">
+
+                                    <h3>Objectives</h3>
+
+
+                                    {% for obj in obfs %}
+                                        <div class="item obj obj-item" id="obj-{{ obj.id }}">{{ obj.name }}</div>
+                                    {% endfor %}
+
+
+                                </div>
+
+                                <div class="left vos" style="margin-left: 160px;">
+
+                                    <h3>Solvers</h3>
+                                    {% for slv in opt_solvers %}
+                                        <div class="item slv slv-item" id="slv-{{ slv.id }}">{{ slv.name }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    <div>
+
+                </div>
+                <div class="box-footer">
+                    <a href="#" class="btn btn-primary" id="solutionId">Save Configuration</a>
+                </div>
+
+
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_2-2">
+                <div class="box box-info">
+
+        <div class="box-header with-border">
+            <h3>Mapping Plane</h3>
+        </div>
+        <div class="box-body">
+
+            <div class="left tasks">
+                <h3>Tasks</h3>
+
+                {% for tk in tasks %}
+                    <div class="item tasks task-item" id="task-{{ tk.id }}">{{ tk.title }}</div>
+
+                {% endfor %}
+            </div>
+            <div class="right vos">
+
+                <h3>Virtual Objects</h3>
+                {% for vo in vos %}
+                    <div class="item vo vo-item" id="vo-{{ vo.id }}">{{ vo.name }}</div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+        <div class="box-footer">
+            <a href="/deploy-tasks" class="btn btn-primary" id="mapTaskBtn">Save Configuration</a>
+        </div>
+
+
+    </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_3-2">
+                <div class="box box-info">
+
+                    <div class="box-header with-border">
+                        <h3>Scheduling Plane</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="left tasks">
+                            {% for prob in mp_data %}
+
+                                    <div class="box">
+                                      <div class="box-header with-border">
+                                        <h3 class="box-title">{{ prob.title }}</h3>
+                                      </div>
+
+                                    </div>
+
+
+                                    {% for mprob in prob.microproblems %}
+                                        <div class="item mprob smp-item" id="smp-{{ mprob.mpid }}">{{ mprob.mp_name }}</div>
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                Solution Tasks of Microproblem {{ mprob.mp_name }}
+                                            </div>
+                                            <div class="box-body">
+
+                                                {% for task in mprob.mptasks %}
+                                                    <div class="item tvpair tvpair-item" id="tvpair-{{ task.id }}">{{ task.name }}->{{ task.name }}</div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                            {% endfor %}
+
+                        </div>
+                        <div class="right vos">
+
+                            <h3>Scheduling Solver</h3>
+
+                            {% for sch in sch_solvers %}
+                                <div class="item sch sch-item" id="sch-{{ sch.id }}">{{ sch.name }}</div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <a href="/deploy-tasks" class="btn btn-primary" id="scheduleSolution">Save Configuration</a>
+                    </div>
+
+
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_4-4">
+                <div class="box box-info">
+
+                    <div class="box-header with-border">
+                        <h3>Control Plane</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="left tasks">
+                            {% for prob in mp_data %}
+
+                                    <div class="box">
+                                      <div class="box-header with-border">
+                                        <h3 class="box-title">{{ prob.title }}</h3>
+                                      </div>
+
+                                    </div>
+
+
+                                    {% for mprob in prob.microproblems %}
+                                        <div class="item mprob cmp-item" id="cmp-{{ mprob.mpid }}">{{ mprob.mp_name }}</div>
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                Solution Tasks of Microproblem {{ mprob.mp_name }}
+                                            </div>
+                                            <div class="box-body">
+
+                                                {% for task in mprob.mptasks %}
+                                                    <div class="item tvpair tvpair-item" id="tvpair-{{ task.id }}">{{ task.name }}->{{ task.name }}</div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                            {% endfor %}
+
+                        </div>
+                        <div class="right vos">
+
+                            <h3>Control Solver</h3>
+
+                            {% for con in con_solvers %}
+                                <div class="item con con-item" id="con-{{ con.id }}">{{ con.name }}</div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <a href="/deploy-tasks" class="btn btn-primary" id="controlSolution">Save Configuration</a>
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.5.8/js/jsplumb.min.js"></script>
+    <script type="text/javascript">
+    jsPlumb.ready(function() {
+
+    //jsPlumb.setContainer($('.flowchart'))
+    var common = {
+        anchor:"Continuous",
+        endpoint:["Rectangle", { width:20, height:20 }],
+        paintStyle: {fill:"gray", stroke:"gray", strokeWidth:3}
+    };
+
+
+
+
+    {#Adding Prediction and Optimization IDs#}
+
+
+
+
+    {#Connection from microproblem to objective#}
+    var source = addValues('mp-item');
+    var target = addValues('obj-item');
+    var target2 = addValues('slv-item');
+
+
+
+
+
+
+
+    var plumb = jsPlumb.getInstance();
+    configuredObj1 = configurePlumb(plumb,common, source, target);
+
+
+    var plumb2 = jsPlumb.getInstance();
+    configuredObj2 = configurePlumb(plumb2, common,target, target2);
+
+
+    saveDatabase('solutionId',configuredObj1,configuredObj2)
+
+    {#Connection from S.microproblem to Scheduling solvers#}
+    var sourceTab3 = addValues('smp-item');
+    var targetTab3 = addValues('sch-item');
+    console.log(sourceTab3)
+    console.log(targetTab3)
+
+    var plumb3 = jsPlumb.getInstance();
+    configuredObj1 = configurePlumb(plumb3,common, sourceTab3, targetTab3);
+    $("#scheduleSolution").on('click', function () {
+                console.log(configuredObj1);
+
+
+               $.get(save_url_val1, { from: configuredObj1[0][0], to: configuredObj1[1][0], "type": "Scheduling" });
+                return false;
+            });
+
+    {#Connection from S.microproblem to Scheduling solvers#}
+    var sourceTab3 = addValues('cmp-item');
+    var targetTab3 = addValues('con-item');
+    console.log(sourceTab3)
+    console.log(targetTab3)
+
+    var plumb3 = jsPlumb.getInstance();
+    configuredObj1 = configurePlumb(plumb3,common, sourceTab3, targetTab3);
+    $("#controlSolution").on('click', function () {
+                console.log(configuredObj1);
+
+
+               $.get(save_url_val1, { from: configuredObj1[0][0], to: configuredObj1[1][0], "type": "Control" });
+                return false;
+            });
+
+    var sourceTab3 = addValues('task-item');
+    var targetTab3 = addValues('vo-item');
+    console.log(sourceTab3)
+    console.log(targetTab3)
+
+    var plumb4 = jsPlumb.getInstance();
+    configuredObj1 = configurePlumb(plumb4,common, sourceTab3, targetTab3);
+
+    $("#mapTaskBtn").on('click', function () {
+                console.log(configuredObj1);
+                var tasks = [];
+
+                configuredObj1.forEach(function (mp) {
+                    tasks.push({"from":mp[0][0], "to":mp[1][0]});
+                });
+
+                console.log(tasks)
+               //$.get(save_url_val2,{"tasks":tasks});
+
+                $.ajax({
+                 type: "POST",
+                 dataType: 'json',
+                 data: JSON.stringify (tasks),
+                 contentType: "application/json",
+                 crossDomain: true,
+                 url: save_url_val2
+             }).done(function (data) {
+                 //$('#spinner-' + id).hide();
+
+                 if (data) {
+                     console.log("data-returned"+data);
+                     {#$('#spinner-' + marker).parent().next().html("solved");#}
+                     {#$('#' + marker).text('Deployed');#}
+                     {#$('#' + marker).addClass('btn-success');#}
+                     {#$('#' + marker).attr('href', '#');#}
+                     {#$('#boxResult').show();#}
+                     {#$("#boxResultText").html(data)#}
+                     {#$('.spinner').hide();#}
+                 }
+             }).fail(function (data) {
+
+                 {#$('#spinner-' + id).parent().next().html("Error Accessing IoT Gateway!");#}
+                 {#$('#' + id).addClass('btn-danger')#}
+             });
+                return false;
+            });
+
+
+
+
+});
+
+    function addValues(source) {
+        var retS= [];
+        $('.'+source).each(function() {
+            retS.push(this.id)
+        });
+
+        return retS;
+    }
+
+    function configurePlumb(plumb,common,source,target) {
+        plumb.makeSource(source, {
+        connector: 'StateMachine'
+        }, common);
+        plumb.makeTarget(target, {
+            connector: 'StateMachine',
+            allowLoopback: true,
+            maxConnection:3,
+            isTarget:true,
+            overlays:[
+                ["Arrow" , { width:12, length:12, location:0.67 }]
+            ]
+
+
+        }, common);
+ var retArr = [];
+
+        plumb.bind('connection', function(info) {
+
+        var msource1 = [];
+        var mtarget1 = [];
+            console.log("before posting");
+                msource1.push(info.sourceId.split("-")[1]);
+                mtarget1.push(info.targetId.split("-")[1]);
+                //console.log(msource1+mtarget1+"inside target 1")
+                console.log(msource1,mtarget1)
+        //$.get(save_url_val, { from: info.sourceId.split("-")[1], to: info.targetId.split("-")[1] });
+
+        retArr.push([msource1,mtarget1]);
+
+        });
+
+        return retArr;
+    }
+
+    function saveDatabase(triggerID, conn1, conn2) {
+        $("#"+triggerID).on('click', function () {
+                {#console.log(conn1);#}
+                {#console.log(conn2);#}
+                {#console.log(conn1[0][0][0], conn1[0][1][0], conn2[0][1][0], conn2[1][0][0], conn2[1][1][0])#}
+
+
+               $.get(save_url_val, { from: conn1[0][0][0], predto1: conn1[0][1][0], predto2:conn2[0][1][0], opto1: conn2[1][0][0], opto2:conn2[1][1][0]});
+                return false;
+            });
+    }
+    </script>
+
+
+{% endblock %}

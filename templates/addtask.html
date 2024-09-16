@@ -1,0 +1,115 @@
+<script type="text/javascript">
+    var url_val = {{ url_for('_get_microservices') }}
+</script>
+
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+
+<div class="form-wrapper">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3>Add Task</h3>
+        </div>
+        <div class="box-body">
+            {% from "includes/_formhelpers.html" import render_field %}
+            <form class="form-horizontal" method="post" action="/addtask">
+            {{ form.hidden_tag() }}
+
+              <div class="form-group row">
+
+                  <div class="col-sm-10">
+                      <div class="col-sm-5">
+                       {{ render_field(form.title, class="form-control") }}
+                      </div>
+                  </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                  <div class="col-sm-10">
+                      <div class="col-sm-5">
+                       {{ render_field(form.service, class="form-control") }}
+                      </div>
+                      <div class="col-sm-5">
+                       {{ render_field(form.microservice, class="form-control") }}
+                      </div>
+                  </div>
+
+            </div>
+
+             <fieldset class="scheduler-border with-border">
+                <legend class="scheduler-border">Task Orchestration Parameters</legend>
+
+            <div class="form-group row">
+
+              <div class="col-sm-10">
+                  <div class="col-sm-5">
+                    {{ render_field(form.arrivalTime, class="form-control") }}
+                </div>
+                  <div class="col-sm-5">
+                   {{ render_field(form.period, class="form-control") }}
+                  </div>
+              </div>
+
+          </div>
+          <div class="form-group row">
+               <div class="col-sm-10">
+                <div class="col-sm-5">
+                    {{ render_field(form.execution, class="form-control") }}
+                </div>
+                <div class="col-sm-5">
+                    {{ render_field(form.deadline, class="form-control") }}
+                </div>
+            </div>
+          </div>
+             </fieldset>
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Static Parameters</legend>
+            <div class="form-group row">
+
+                <div class="col-sm-10">
+                <div class="col-sm-5">
+                    {{ render_field(form.out_minthreshold, class="form-control") }}
+                </div>
+                <div class="col-sm-5">
+                    {{ render_field(form.out_maxthreshold, class="form-control") }}
+                </div>
+            </div>
+                <div class="col-sm-10">
+                <div class="col-sm-5">
+                    {{ render_field(form.period_minthreshold, class="form-control") }}
+                </div>
+                <div class="col-sm-5">
+                    {{ render_field(form.period_maxthreshold, class="form-control") }}
+                </div>
+            </div>
+          </div>
+            </fieldset>
+
+
+              <div class="form-group row">
+                <div class="col-sm-3 is_event form-check">
+                    {{ render_field(form.isEvent , class="form-check-input") }}
+                </div>
+                  <div class="col-sm-5 is_event form-check">
+                    {{ render_field(form.OperationMode , class="form-check-input") }}
+                </div>
+              </div>
+              <button type="submit" name="save_tasks" class="btn btn-primary">Add Task</button>
+
+        </form>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+{% endblock %}
+
