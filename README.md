@@ -5,7 +5,7 @@ There is no definite architecture based on artificial cognition and a reference 
 
 This project is the `implementation code` of the proposed architecture for complex problem solving based on predictive optimization and task orchestration to deal with multi-objective problems. We define the modular approach of the architecture which aims to solve different problems with predictive, optimization, scheduling and control solvers. We design and develop a case study of microgrids complex problems of economy, cost and effective operation on top of the proposed architecture.
 
-Codebase: Python
+`Codebase: Python
 Optimization Server: NEOS
-Web: Flask
+Web: Flask`
 
